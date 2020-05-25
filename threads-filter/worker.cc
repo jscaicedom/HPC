@@ -21,9 +21,10 @@ void filter(const long n, const long m, float *data, const float threshold, std:
     
     //store the sum in an array(vector) only if it is valid (i.e if it is greater than threshold
     if (sum > threshold){
-        #pragma omp atomic
+#pragma omp critical
+{
             result_row_ind.push_back(i);
-	    
+ }	    
      }
       
   }
