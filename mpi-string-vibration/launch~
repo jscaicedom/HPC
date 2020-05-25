@@ -1,0 +1,6 @@
+#PBS -N sema3
+cd ~/HPC/mpi-string-vibration
+echo Starting calculation
+./app
+echo End of calculation
+
