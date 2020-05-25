@@ -13,8 +13,8 @@
 [worker.cc](https://github.com/jscaicedom/HPC/tree/master/mpi-string-vibration/worker.cc)
 
 ### Archivos generados
-[Errores](https://github.com/jscaicedom/HPC/blob/master/threads-filter/sema3.e114690)
+[Errores](https://github.com/jscaicedom/HPC/blob/master/mpi-string-vibration/sema3.e114690)
 
-[Output](https://github.com/jscaicedom/HPC/blob/master/threads-filter/sema5.o114690)
+[Output](https://github.com/jscaicedom/HPC/blob/master/mpi-string-vibration/sema5.o114690)
 
 
