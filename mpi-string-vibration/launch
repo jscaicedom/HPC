@@ -1,6 +1,0 @@
-#PBS -N sema5
-cd ~/HPC/mpi-string-vibration
-echo Starting calculation
-./app
-echo End of calculation
-

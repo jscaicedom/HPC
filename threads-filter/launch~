@@ -1,6 +1,0 @@
-#PBS -N sema3
-cd ~/threads-filter
-echo Starting calculation
-./app
-echo End of calculation
-
