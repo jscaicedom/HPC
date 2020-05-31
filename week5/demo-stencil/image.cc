@@ -83,15 +83,18 @@ ImageClass<P>::ImageClass(char const * file_name) {
 template<typename P>
 ImageClass<P>::~ImageClass() {
   // Deallocate image
-  _mm_free(pixel);
+  hbw_free(pixel);
 }
 
 
 
 template<typename P> 
-void ImageClass<P>::WriteToFile(char const * file_name) {
+void ImageClass<P>::WriteToFile(char const * file_name, int const myRank, int const nRanks) {
 
   // Open file
+  char base[100];
+  strcpy(base, file_name);
+  sprintf(file_name, "%d-%s", myRank, base);
   FILE *fp = fopen(file_name, "wb");
   if (!fp) {
     printf("Could not open %s for writing\n", file_name);

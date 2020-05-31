@@ -1,5 +1,5 @@
 #PBS -N sema3
-cd ~/HPC/threads-filter
+cd ~/HPC/week3/homework
 echo Starting calculation
 ./app
 echo End of calculation
