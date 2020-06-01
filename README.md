@@ -25,7 +25,7 @@
 [worker.cc](https://github.com/jscaicedom/HPC/tree/master/week5/homework/worker.cc)
 
 ### Archivos generados
-[Errores](https://github.com/jscaicedom/HPC/blob/master/week5/homework/sema3.e116294)
+[Errores](https://github.com/jscaicedom/HPC/blob/master/week5/homework/sema5.e116294)
 
 [Output](https://github.com/jscaicedom/HPC/blob/master/week5/homework/sema5.o116294)
 
