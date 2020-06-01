@@ -1,5 +1,5 @@
 #PBS -N sema5
-cd ~/HPC/mpi-string-vibration
+cd ~/HPC/week5/homework
 echo Starting calculation
 ./app
 echo End of calculation
