@@ -1,5 +1,5 @@
-CXX=icpc
-CXXFLAGS=-c -qopenmp
+CXX=mpiicpc
+CXXFLAGS=-c -qopenmp -qopt-report=5 -xMIC-AVX512
 LDFLAGS=-qopenmp
 
 OBJECTS=main.o library.o worker.o
@@ -13,7 +13,7 @@ run:	all
 	./integral
 
 queue:	all
-	echo 'cd $$PBS_O_WORKDIR ; ./integral' | qsub -l nodes=1:flat -l walltime=00:03:00 -N numintegr
+	echo 'cd $$PBS_O_WORKDIR ; mpirun -machinefile $$PBS_NODEFILE ./integral' | qsub -l nodes=4:flat -N numintegr
 
 clean:
 	rm -f *.optrpt *.o integral *~ numintegr.*

@@ -1,12 +1,13 @@
 #include <cmath>
 #include <cstdio>
 #include <omp.h>
+#include <mpi.h>
 #include "library.h"
 
 const int nTrials = 10;
 const int skipTrials = 3; // Skip first iteration as warm-up
 
-double ComputeIntegral(const int n, const double a, const double b);
+double ComputeIntegral(const int n, const double a, const double b, const int rank, const int nRanks);
 
 double Stats(double & x, double & dx) {
   x  /= (double)(nTrials - skipTrials);
@@ -22,10 +23,18 @@ double Accuracy(const double I, const double a, const double b) {
 
 int main(int argc, char** argv) {
 
+  MPI_Init(&argc, &argv);
+
+  int rank, nRanks;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &nRanks);
+
   const int n = 1000*1000*1000;
 
+  if (rank == 0) {
   printf("\n\033[1mNumerical integration with n=%d\033[0m\n", n);
   printf("\033[1m%5s %15s %15s %15s\033[0m\n", "Step", "Time, ms", "GSteps/s", "Accuracy"); fflush(stdout);
+  }
 
   double t, dt, f, df;
 
@@ -34,8 +43,10 @@ int main(int argc, char** argv) {
     const double a = double(iTrial - 1);
     const double b = double(iTrial + 1);
 
+    MPI_Barrier(MPI_COMM_WORLD);
+
     const double t0 = omp_get_wtime();
-    const double I = ComputeIntegral(n, a, b);
+    const double I = ComputeIntegral(n, a, b, rank, nRanks);
     const double t1 = omp_get_wtime();
 
     const double ts   = t1-t0; // time in seconds
@@ -51,6 +62,7 @@ int main(int argc, char** argv) {
 
     const double acc = Accuracy(I, a, b);
 
+    if (rank == 0)
     // Output performance
     printf("%5d %15.3f %15.3f %15.3e%s\n", 
 	   iTrial, tms, fpps, acc, (iTrial<=skipTrials?"*":""));
@@ -59,10 +71,15 @@ int main(int argc, char** argv) {
 
   Stats(t, dt);  
   Stats(f, df);  
+
+  if (rank == 0) {
   printf("-----------------------------------------------------\n");
   printf("\033[1m%s\033[0m\n%8s   \033[42m%8.1f+-%.1f\033[0m   \033[42m%8.1f+-%.1f\033[0m\n",
 	 "Average performance:", "", t, dt, f, df);
   printf("-----------------------------------------------------\n");
   printf("* - warm-up, not included in average\n\n");
+  }
+
+  MPI_Finalize();
 
 }
